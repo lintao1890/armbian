@@ -206,12 +206,12 @@ on:
       builder_name:
         description: "Set Armbian builder signature."
         required: false
-        default: "ophub"
+        default: "lintao1890"
         type: choice
         options:
           - ophub
           - angel
-          - yourname
+          - lintao1890
 
 env:
   TZ: America/New_York
