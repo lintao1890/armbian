@@ -24,7 +24,7 @@ on:
       armbian_board:
         description: "Select device board."
         required: false
-        default: "all"
+        default: "panther-x2"
         type: choice
         options:
           - all
@@ -154,7 +154,7 @@ on:
       armbian_kernel:
         description: "Select kernel version."
         required: false
-        default: "6.1.1_6.6.1"
+        default: "6.6.1"
         type: choice
         options:
           - 5.4.1_5.10.1
