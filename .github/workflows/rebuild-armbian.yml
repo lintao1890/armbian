@@ -1,6 +1,6 @@
 #==========================================================================
 # Description: Build Armbian
-# Copyright (C) 2021 https://github.com/ophub/amlogic-s9xxx-armbian
+# Copyright (C) 2021 https://github.com/lintao1890/panther-x2-armbian
 #==========================================================================
 
 name: Rebuild armbian
@@ -264,7 +264,7 @@ jobs:
           echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Rebuild Armbian
-        uses: ophub/amlogic-s9xxx-armbian@main
+        uses: lintao1890/panther-x2-armbian@main
         if: ${{ env.ARMBIAN_URL }} != '' && !cancelled()
         with:
           build_target: armbian
