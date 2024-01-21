@@ -24,7 +24,7 @@ on:
       armbian_board:
         description: "Select device board."
         required: false
-        default: "all"
+        default: "panther-x2"
         type: choice
         options:
           - all
