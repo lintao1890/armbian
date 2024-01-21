@@ -56,11 +56,11 @@ on:
       kernel_sign:
         description: "Set the kernel custom signature"
         required: false
-        default: "-ophub"
+        default: "-lintao1890"
         type: choice
         options:
           - -ophub
-          - -yourname
+          - -lintao1890
 
 env:
   TZ: America/New_York
