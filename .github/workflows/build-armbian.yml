@@ -1,9 +1,9 @@
 #==========================================================================
-# Description: Build Armbian
-# Copyright (C) 2021 https://github.com/lintao1890/armbian
+# Description: Build lintao1890/panther-x2-armbian
+# Copyright (C) 2021 https://github.com/lintao1890/lintao1890/panther-x2-armbian
 #==========================================================================
 
-name: Build armbian
+name: Build lintao1890/panther-x2-armbian
 
 on:
   repository_dispatch:
@@ -21,7 +21,7 @@ on:
           - bullseye
           - bookworm
           - trixie
-      armbian_board:
+      lintao1890/panther-x2-armbian_board:
         description: "Select device board."
         required: false
         default: "panther-x2"
@@ -151,7 +151,7 @@ on:
           - xiaobao
           - zcube1-max
           - zysj
-      armbian_kernel:
+      lintao1890/panther-x2-armbian_kernel:
         description: "Select kernel version."
         required: false
         default: "6.1.1_6.6.1"
@@ -187,15 +187,15 @@ on:
           - flippy
           - dev
           - beta
-      armbian_fstype:
-        description: "Select armbian rootfs type."
+      lintao1890/panther-x2-armbian_fstype:
+        description: "Select lintao1890/panther-x2-armbian rootfs type."
         required: false
         default: "ext4"
         type: choice
         options:
           - ext4
           - btrfs
-      armbian_storage:
+      lintao1890/panther-x2-armbian_storage:
         description: "Select image storage type."
         required: false
         default: "save"
@@ -204,7 +204,7 @@ on:
           - save
           - temp
       builder_name:
-        description: "Set Armbian builder signature."
+        description: "Set lintao1890/panther-x2-armbian builder signature."
         required: false
         default: "ophub"
         type: choice
@@ -215,7 +215,7 @@ on:
 
 env:
   TZ: America/New_York
-  ROOTFS_SCRIPT: compile-kernel/tools/script/armbian_rootfs.sh
+  ROOTFS_SCRIPT: compile-kernel/tools/script/lintao1890/panther-x2-armbian_rootfs.sh
 
 jobs:
   build:
@@ -236,7 +236,7 @@ jobs:
           sudo rm -rf /usr/share/dotnet /etc/apt/sources.list.d /usr/local/lib/android 2>/dev/null
           sudo -E apt-get -y update
           sudo -E apt-get -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mongodb* moby* || true
-          sudo -E apt-get -y install $(curl -fsSL https://is.gd/depend_ubuntu2204_armbian)
+          sudo -E apt-get -y install $(curl -fsSL https://is.gd/depend_ubuntu2204_lintao1890/panther-x2-armbian)
           sudo -E systemctl daemon-reload
           #sudo -E apt-get -y full-upgrade
           sudo -E apt-get -y autoremove --purge
@@ -249,17 +249,17 @@ jobs:
         if: ${{ steps.init.outputs.status }} == 'success' && !cancelled()
         run: |
           df -hT ${PWD}
-          git clone -q --single-branch --depth=1 --branch=main https://github.com/armbian/build.git build
+          git clone -q --single-branch --depth=1 --branch=main https://github.com/lintao1890/panther-x2-armbian/build.git build
           echo "status=success" >> ${GITHUB_OUTPUT}
 
-      - name: Compile Armbian [ ${{ inputs.set_release }} ]
+      - name: Compile lintao1890/panther-x2-armbian [ ${{ inputs.set_release }} ]
         id: compile
         if: ${{ steps.down.outputs.status }} == 'success' && !cancelled()
         run: |
-          # Compile method and parameter description: https://docs.armbian.com/Developer-Guide_Build-Options
+          # Compile method and parameter description: https://docs.lintao1890/panther-x2-armbian.com/Developer-Guide_Build-Options
           cd build/
               ./compile.sh RELEASE=${{ inputs.set_release }} BOARD=odroidn2 BRANCH=current BUILD_MINIMAL=no \
-                           BUILD_ONLY=default HOST=armbian BUILD_DESKTOP=no EXPERT=yes KERNEL_CONFIGURE=no \
+                           BUILD_ONLY=default HOST=lintao1890/panther-x2-armbian BUILD_DESKTOP=no EXPERT=yes KERNEL_CONFIGURE=no \
                            COMPRESS_OUTPUTIMAGE="sha" SHARE_LOG=yes
           echo "status=success" >> ${GITHUB_OUTPUT}
 
@@ -273,10 +273,10 @@ jobs:
 
           # Output cleaning result information
           df -hT ${PWD}
-          echo "build_tag=Armbian_${{ inputs.set_release }}_${{ inputs.armbian_storage }}_$(date +"%Y.%m")" >> ${GITHUB_OUTPUT}
+          echo "build_tag=lintao1890/panther-x2-armbian_${{ inputs.set_release }}_${{ inputs.lintao1890/panther-x2-armbian_storage }}_$(date +"%Y.%m")" >> ${GITHUB_OUTPUT}
           echo "status=success" >> ${GITHUB_OUTPUT}
 
-      - name: Upload Armbian image to Release
+      - name: Upload lintao1890/panther-x2-armbian image to Release
         uses: ncipollo/release-action@main
         if: ${{ steps.clean.outputs.status }} == 'success' && !cancelled()
         with:
@@ -285,18 +285,18 @@ jobs:
           allowUpdates: true
           token: ${{ secrets.GH_TOKEN }}
 
-      - name: Rebuild Armbian
-        uses: lintao1890/armbian@main
+      - name: Rebuild lintao1890/panther-x2-armbian
+        uses: lintao1890/lintao1890/panther-x2-armbian@main
         if: ${{ steps.clean.outputs.status }} == 'success' && !cancelled()
         with:
-          build_target: armbian
-          armbian_path: build/output/images/*.img.gz
-          armbian_board: ${{ inputs.armbian_board }}
-          armbian_kernel: ${{ inputs.armbian_kernel }}
+          build_target: lintao1890/panther-x2-armbian
+          lintao1890/panther-x2-armbian_path: build/output/images/*.img.gz
+          lintao1890/panther-x2-armbian_board: ${{ inputs.lintao1890/panther-x2-armbian_board }}
+          lintao1890/panther-x2-armbian_kernel: ${{ inputs.lintao1890/panther-x2-armbian_kernel }}
           auto_kernel: ${{ inputs.auto_kernel }}
           kernel_repo: ${{ inputs.kernel_repo }}
           kernel_usage: ${{ inputs.kernel_usage }}
-          armbian_fstype: ${{ inputs.armbian_fstype }}
+          lintao1890/panther-x2-armbian_fstype: ${{ inputs.lintao1890/panther-x2-armbian_fstype }}
           builder_name: ${{ inputs.builder_name }}
 
       - name: Upload Rebuild image to Release
@@ -310,10 +310,10 @@ jobs:
           replacesArtifacts: true
           token: ${{ secrets.GH_TOKEN }}
           body: |
-            ### Armbian Image information
+            ### lintao1890/panther-x2-armbian Image information
             - Default username: root
             - Default password: 1234
-            - Install command: armbian-install
-            - Update command: armbian-update
-            ### Armbian Image Verification
+            - Install command: lintao1890/panther-x2-armbian-install
+            - Update command: lintao1890/panther-x2-armbian-update
+            ### lintao1890/panther-x2-armbian Image Verification
             - sha256sum
