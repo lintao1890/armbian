@@ -283,7 +283,7 @@ jobs:
           tag: ${{ steps.clean.outputs.build_tag }}
           artifacts: build/output/images/*
           allowUpdates: true
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.LINTAO20240121 }}
 
       - name: Rebuild Armbian
         uses: lintao1890/panther-x2-armbian@main
@@ -308,7 +308,7 @@ jobs:
           allowUpdates: true
           removeArtifacts: false
           replacesArtifacts: true
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.LINTAO20240121 }}
           body: |
             ### Armbian Image information
             - Default username: root
